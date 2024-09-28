@@ -8,8 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create(email: 'test@gmail.com', password: 'password', password_confirmation: 'password')
+User.create(
+  email: 'admin@gmail.com',
+  name: 'test',
+  password: 'password',
+  password_confirmation: 'password',
+  role: User.roles[:admin])
+User.create(email: 'rails@gmail.com', name: 'rails', password: 'password', password_confirmation: 'password')
+User.create(email: 'angular@gmail.com', name: 'angular', password: 'password', password_confirmation: 'password')
 
 10.times do |x|
-  Post.create(title: "Title #{x}", body: "Body #{x} Words go here", user_id: User.first.id)
+  post = Post.create(title: "Title #{x}", body: "Body #{x} Words go here", user_id: User.first.id)
+
+  5.times do |y|
+    Comment.create(post_id: post.id, user_id: User.second.id, body: "Comment #{y}")
+  end
 end
